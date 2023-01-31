@@ -2,7 +2,7 @@
 
 <!-- ABOUT THE PROJECT -->
 <h2 id="about-the-project"> :pencil: About The Project</h2>
-This project is inspired by the real game "Match" from Top Trumps.
+This project is inspired by the real game "Match" made by Top Trumps.
 
 <!-- TABLE OF CONTENTS -->
 <h2 id="about-the-project">Table of contents</h2>
