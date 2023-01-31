@@ -1,9 +1,9 @@
 package org.michalbaran;
 
+import org.michalbaran.enums.Figure;
+
 public class Main {
     public static void main(String[] args) {
-        for (Character c : Character.values()) {
-            System.out.print(c + " ");
-        }
+        System.out.println(Figure.valueOf("HER"));
     }
 }
