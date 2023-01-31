@@ -15,7 +15,48 @@
 <h2 id="about-the-project"> :pencil: About The Project</h2>
 This project is inspired by the real game "Match" made by Top Trumps.
 
+<!-- OVERVIEW -->
+<h2 id="overview"> :cloud: Overview</h2>
+
 The game has the form of double-sided board with 25 square fields in 5x5 layout. There is a cube in each square, and each cube consists of 6 walls with symbols (in this particular case, characters from the Harry Potter series).
+
+<table>
+  <tr>
+    <td><img src="/src/main/resources/images/gry.png"></td>
+    <td><img src="/src/main/resources/images/hed.png"></td>
+    <td><img src="/src/main/resources/images/hag.png"></td>
+    <td><img src="/src/main/resources/images/fle.png"></td>
+    <td><img src="/src/main/resources/images/her.png"></td>
+  </tr>
+  <tr>
+    <td><img src="/src/main/resources/images/zgr.png"></td>
+    <td><img src="/src/main/resources/images/gry.png"></td>
+    <td><img src="/src/main/resources/images/dra.png"></td>
+    <td><img src="/src/main/resources/images/lun.png"></td>
+    <td><img src="/src/main/resources/images/hag.png"></td>
+  </tr>
+  <tr>
+    <td><img src="/src/main/resources/images/syr.png"></td>
+    <td><img src="/src/main/resources/images/dum.png"></td>
+    <td><img src="/src/main/resources/images/gry.png"></td>
+    <td><img src="/src/main/resources/images/har.png"></td>
+    <td><img src="/src/main/resources/images/ron.png"></td>
+  </tr>
+    <tr>
+    <td><img src="/src/main/resources/images/tre.png"></td>
+    <td><img src="/src/main/resources/images/mcg.png"></td>
+    <td><img src="/src/main/resources/images/lun.png"></td>
+    <td><img src="/src/main/resources/images/gry.png"></td>
+    <td><img src="/src/main/resources/images/hed.png"></td>
+  </tr>
+      <tr>
+    <td><img src="/src/main/resources/images/ton.png"></td>
+    <td><img src="/src/main/resources/images/ron.png"></td>
+    <td><img src="/src/main/resources/images/tre.png"></td>
+    <td><img src="/src/main/resources/images/zgr.png"></td>
+    <td><img src="/src/main/resources/images/gry.png"></td>
+  </tr>
+</table>
 
 The game comes with fifteen cards with the same symbols as on the dice.
 
