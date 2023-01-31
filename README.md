@@ -14,4 +14,9 @@ In general:
 Game rules:
 1. An the beggining, players draw two cards with characters symbols.
 2. The game starts: first player pushes cube on the top-left field - the pushed cube is now on the second player side.
-3. The second player can choose a symbol from cube in his hand, a push it into almost any field on the board (except the one, from which cube comes from).
+3. The second player can choose a symbol from cube in his hand, and push it into almost any field on the board (except the one, from which cube comes from). The pushed cube lands on the first player side.
+4. The first player does the same as the second player in step 3.
+5. The game continues until one of the players has a "match".
+
+Goal:
+The player who scores 5 points wins.
