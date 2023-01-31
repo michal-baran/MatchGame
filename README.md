@@ -1,6 +1,20 @@
-# MatchGame - logic game for two players.
+<h1 align="center">MatchGame - logic game for two players</h1>
 
+<!-- ABOUT THE PROJECT -->
+<h2 id="about-the-project"> :pencil: About The Project</h2>
 This project is inspired by the real game "Match" from Top Trumps.
+
+<!-- TABLE OF CONTENTS -->
+<h2 id="about-the-project">Table of contents</h2>
+<details open="open">
+  <summary>Table of Contents</summary>
+  <ol>
+    <li><a href="#about-the-project"> ➤ About The Project</a></li>
+    <li><a href="#overview"> ➤ Overview</a></li>
+    <li><a href="#project-files-description"> ➤ Project Files Description</a></li>
+  </ol>
+</details>
+
 
 The game has the form of double-sided board with 25 square fields in 5x5 layout. There is a cube in each square, and each cube consists of 6 walls with symbols (in this particular case, characters from the Harry Potter series).
 
