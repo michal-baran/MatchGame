@@ -1,4 +1,4 @@
-package org.michalbaran.enums;
+package org.michalbaran.components;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

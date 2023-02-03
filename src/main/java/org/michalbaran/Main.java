@@ -1,9 +1,10 @@
 package org.michalbaran;
 
-import org.michalbaran.enums.Figure;
+import org.michalbaran.components.Board;
 
 public class Main {
     public static void main(String[] args) {
-        System.out.println(Figure.valueOf("HER"));
+        Board board = new Board("src/main/resources/Cubes.txt");
+        board.showSide1();
     }
 }

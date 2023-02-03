@@ -1,11 +1,11 @@
-package org.michalbaran.enums;
+package org.michalbaran.components;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public enum Figure {
+public enum Symbol {
     SYR(AnsiColor.YELLOW),
     HED(AnsiColor.RED),
     GRY(AnsiColor.BLUE),
@@ -20,7 +20,7 @@ public enum Figure {
     HER(AnsiColor.WHITE),
     DUM(AnsiColor.CYAN),
     LUN(AnsiColor.BRIGHT_MAGENTA),
-    FLR(AnsiColor.BRIGHT_CYAN);
+    FLE(AnsiColor.BRIGHT_CYAN);
 
     private final AnsiColor color;
 
