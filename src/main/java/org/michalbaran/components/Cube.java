@@ -16,7 +16,6 @@ public class Cube {
                 .map(Symbol::valueOf)
                 .unordered()
                 .collect(Collectors.toList());
-
         generateOpposites();
     }
 

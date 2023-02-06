@@ -1,8 +1,12 @@
 package org.michalbaran.components;
 
 import lombok.Getter;
+import lombok.Setter;
+
+import java.util.Random;
 
 @Getter
+@Setter
 public class Spot {
     private Cube cube;
     private Symbol symbol1;
@@ -10,16 +14,7 @@ public class Spot {
 
     public Spot(Cube cube) {
         this.cube = cube;
-        setSymbol(cube.getSymbol(0), false);
-    }
-
-    public void setSymbol(Symbol symbol, boolean firstSide) {
-        if (firstSide) {
-            symbol1 = symbol;
-            symbol2 = cube.getOppositeSymbol(symbol);
-        } else {
-            symbol2 = symbol;
-            symbol1 = cube.getOppositeSymbol(symbol);
-        }
+        this.symbol1 = cube.getSymbol(new Random().nextInt(5));
+        this.symbol2 = cube.getOppositeSymbol(symbol1);
     }
 }

@@ -10,8 +10,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Game {
-    private Board board;
     private List<Cube> cubes;
+    private Board board;
 
     public Game(String input) {
         try {
@@ -21,9 +21,11 @@ public class Game {
         } catch (IOException e) {
             System.out.println("File not found");
         }
+        this.board = new Board(cubes);
     }
 
-    public void prepareBoard() {
-
+    public void play() {
+        board.show(true);
+        board.show(false);
     }
 }
