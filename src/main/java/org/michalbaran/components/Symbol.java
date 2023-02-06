@@ -26,6 +26,6 @@ public enum Symbol {
 
     @Override
     public String toString() {
-        return color.getColorCode() + name();
+        return color.getColorCode() + name() + AnsiColor.RESET.getColorCode();
     }
 }
