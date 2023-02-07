@@ -33,4 +33,12 @@ public class Cube {
     public Symbol getSymbol(int index) {
         return symbolsList.get(index);
     }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        Stream.of(symbolsList)
+                .forEach(sb::append);
+        return sb.toString();
+    }
 }

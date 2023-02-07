@@ -3,6 +3,7 @@ package org.michalbaran.components;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
 import java.util.Random;
 
 @Getter
@@ -11,10 +12,16 @@ public class Spot {
     private Cube cube;
     private Symbol symbol1;
     private Symbol symbol2;
+    private List<Spot> neighbourSpots;
 
     public Spot(Cube cube) {
         this.cube = cube;
         this.symbol1 = cube.getSymbol(new Random().nextInt(5));
         this.symbol2 = cube.getOppositeSymbol(symbol1);
     }
+
+    public void addNeighbour(Spot spot) {
+        neighbourSpots.add(spot);
+    }
+
 }
