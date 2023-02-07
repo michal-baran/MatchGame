@@ -1,10 +1,8 @@
-package org.michalbaran;
+package org.michalbaran.components;
 
 import lombok.Getter;
 import org.michalbaran.commands.Command;
 import org.michalbaran.commands.Init;
-import org.michalbaran.components.Board;
-import org.michalbaran.components.Cube;
 
 import java.io.IOException;
 import java.nio.file.Files;

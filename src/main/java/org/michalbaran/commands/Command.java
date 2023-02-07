@@ -1,6 +1,6 @@
 package org.michalbaran.commands;
 
-import org.michalbaran.Game;
+import org.michalbaran.components.Game;
 
 public abstract class Command {
     Game game;

@@ -1,6 +1,6 @@
 package org.michalbaran.commands;
 
-import org.michalbaran.Game;
+import org.michalbaran.components.Game;
 import org.michalbaran.components.Cube;
 import org.michalbaran.components.Symbol;
 

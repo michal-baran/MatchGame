@@ -1,6 +1,4 @@
-package org.michalbaran;
-
-import org.michalbaran.components.Symbol;
+package org.michalbaran.components;
 
 import java.util.Set;
 

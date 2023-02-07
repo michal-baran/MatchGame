@@ -1,6 +1,6 @@
 package org.michalbaran.commands;
 
-import org.michalbaran.Game;
+import org.michalbaran.components.Game;
 
 public class Init extends Command {
     public Init(Game game) {
