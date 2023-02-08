@@ -6,26 +6,28 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public enum Symbol {
-    SYR(AnsiColor.YELLOW),
-    HED(AnsiColor.RED),
-    GRY(AnsiColor.BLUE),
-    ZGR(AnsiColor.BRIGHT_BLUE),
-    TRE(AnsiColor.YELLOW),
-    MCG(AnsiColor.GREEN),
-    RON(AnsiColor.BRIGHT_GREEN),
-    DRA(AnsiColor.BRIGHT_GREEN),
-    HAR(AnsiColor.BRIGHT_RED),
-    TON(AnsiColor.GREEN),
-    HAG(AnsiColor.BRIGHT_YELLOW),
-    HER(AnsiColor.WHITE),
-    DUM(AnsiColor.CYAN),
-    LUN(AnsiColor.BRIGHT_MAGENTA),
-    FLE(AnsiColor.BRIGHT_CYAN);
+    EMPTY("  ", AnsiColor.RESET),
+    SYR("SYR", AnsiColor.YELLOW),
+    HED("HED", AnsiColor.RED),
+    GRY("GRY", AnsiColor.BLUE),
+    ZGR("ZGR", AnsiColor.BRIGHT_BLUE),
+    TRE("TRE", AnsiColor.YELLOW),
+    MCG("MCG", AnsiColor.GREEN),
+    RON("RON", AnsiColor.BRIGHT_GREEN),
+    DRA("DRA", AnsiColor.BRIGHT_GREEN),
+    HAR("HAR", AnsiColor.BRIGHT_RED),
+    TON("TON", AnsiColor.GREEN),
+    HAG("HAG", AnsiColor.BRIGHT_YELLOW),
+    HER("HER", AnsiColor.WHITE),
+    DUM("DUM", AnsiColor.CYAN),
+    LUN("LUN", AnsiColor.BRIGHT_MAGENTA),
+    FLE("FLE", AnsiColor.BRIGHT_CYAN);
 
+    private final String text;
     private final AnsiColor color;
 
     @Override
     public String toString() {
-        return color.getColorCode() + name() + AnsiColor.RESET.getColorCode();
+        return color.getColorCode() + text + AnsiColor.RESET.getColorCode();
     }
 }

@@ -11,11 +11,11 @@ public class TakeTurn extends Command {
 
     @Override
     public Command execute() {
-        Cube cube = this.game.getCubeInHand();
+        Cube cube = game.getCubeInHand();
         Symbol symbol;
 
         while (true) {
-            System.out.printf("%s player turn: Choose a symbol from the cube: %s\n", game.isFirstPlayerTurn() ? "First" : "Second", cube);
+            System.out.printf("%s player turn: Choose a symbol from the cube: %s", game.getActPlayer().getName(), cube);
             symbol = Symbol.valueOf(game.getSc().next().toUpperCase());
             if (cube.isSymbolPresent(symbol)) {
                 break;
@@ -27,7 +27,7 @@ public class TakeTurn extends Command {
         game.setCubeInHand(coord);
         game.getBoard().setCubeInSpot(coord, cube, symbol, game.isFirstPlayerTurn());
 
-        this.game.switchPlayers();
+        game.switchPlayers();
         return new Show(game);
     }
 }

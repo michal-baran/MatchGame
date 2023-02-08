@@ -7,6 +7,7 @@ import org.michalbaran.commands.Show;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
@@ -18,7 +19,8 @@ public class Game {
     private List<Cube> cubes;
     private Cube cubeInHand;
     private final Board board;
-    private final Player[] players = new Player[2];
+    private final List<Player> players = new ArrayList<>();
+    private Player actPlayer;
     private boolean firstPlayerTurn = true;
     Scanner sc = new Scanner(System.in);
 
@@ -30,7 +32,7 @@ public class Game {
         } catch (IOException e) {
             System.out.println("File not found");
         }
-        this.board = new Board(cubes);
+        board = new Board(cubes);
         setCubeInHand("A1");
         setPlayers();
         actCommand = new Show(this);
@@ -44,9 +46,10 @@ public class Game {
 
     private void setPlayers() {
         System.out.println("Type name of the first player: ");
-        players[0] = new Player(sc.next());
+        players.add(new Player(sc.next()));
         System.out.println("Type name of the second player: ");
-        players[1] = new Player(sc.next());
+        players.add(new Player(sc.next()));
+        actPlayer = players.get(0);
     }
 
     public void setCubeInHand(String coord) {
@@ -54,10 +57,11 @@ public class Game {
     }
 
     public void switchPlayers() {
-        this.firstPlayerTurn = !firstPlayerTurn;
+        firstPlayerTurn = !firstPlayerTurn;
+        actPlayer = players.get(firstPlayerTurn ? 0 : 1);
     }
 
     public Cube getCube(String coordinates) {
-        return this.board.getCubeFromSpot(coordinates);
+        return board.getCubeFromSpot(coordinates);
     }
 }

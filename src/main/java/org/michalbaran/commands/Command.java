@@ -8,6 +8,5 @@ public abstract class Command {
     public Command(Game game) {
         this.game = game;
     }
-
     public abstract Command execute();
 }
