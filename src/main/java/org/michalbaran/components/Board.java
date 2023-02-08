@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Board {
-    private List<List<Spot>> spots = new ArrayList<>();
+    private final List<List<Spot>> spots = new ArrayList<>();
 
     public Board(List<Cube> cubes) {
         for (int r = 0; r < 5; r++) {
@@ -31,18 +31,6 @@ public class Board {
         System.out.println(sb);
     }
 
-    public boolean verifyInitState() {
-        for (List<Spot> spot : spots) {
-            for (int c = 0; c < spots.get(0).size(); c++) {
-                if (spot.get(c) == spot.get(c + 1)) {
-                    System.out.println("Board is not prepared correctly");
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
     public Cube getCubeFromSpot(String coordinate) {
         char[] chars = coordinate.toUpperCase().toCharArray();
         int column = chars[0] - 65;
@@ -59,12 +47,15 @@ public class Board {
         int column = chars[0] - 65;
         int row = chars[1] - 49;
 
-        Spot tempSpot = spots.get(row).get(column);
-        tempSpot.setCube(cube);
+        Spot spot = spots.get(row).get(column);
+        spot.setCube(cube);
+
         if (firstPlayer) {
-            tempSpot.setSymbol1(symbol);
+            spot.setSymbol1(symbol);
+            spot.setSymbol2(cube.getOppositeSymbol(symbol));
         } else {
-            tempSpot.setSymbol2(symbol);
+            spot.setSymbol2(symbol);
+            spot.setSymbol1(cube.getOppositeSymbol(symbol));
         }
     }
 }

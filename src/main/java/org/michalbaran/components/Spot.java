@@ -16,12 +16,7 @@ public class Spot {
 
     public Spot(Cube cube) {
         this.cube = cube;
-        this.symbol1 = cube.getSymbol(new Random().nextInt(5));
+        this.symbol1 = cube.getSymbol(new Random().nextInt(6));
         this.symbol2 = cube.getOppositeSymbol(symbol1);
     }
-
-    public void addNeighbour(Spot spot) {
-        neighbourSpots.add(spot);
-    }
-
 }

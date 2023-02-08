@@ -11,7 +11,6 @@ public class Show extends Command {
     @Override
     public Command execute() {
         game.getBoard().show(game.isFirstPlayerTurn());
-        this.game.switchPlayers();
         return new TakeTurn(this.game);
     }
 }

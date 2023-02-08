@@ -1,33 +1,34 @@
 package org.michalbaran.components;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class Cube {
     private final List<Symbol> symbolsList;
-    private final Map<Symbol, Symbol> opposites = new HashMap<>();
+    private final Map<Symbol, Symbol> oppositesMap = new HashMap<>();
 
     public Cube(String input) {
         symbolsList = Stream
                 .of(input.split(","))
                 .map(Symbol::valueOf)
-                .unordered()
                 .collect(Collectors.toList());
-        generateOpposites();
+        setOpposites();
     }
 
-    private void generateOpposites() {
+    private void setOpposites() {
         for (int i = 0; i < 3; i++) {
-            opposites.put(symbolsList.get(i), symbolsList.get(i + 3));
-            opposites.put(symbolsList.get(i + 3), symbolsList.get(i));
+            oppositesMap.put(symbolsList.get(i), symbolsList.get(i + 3));
+            oppositesMap.put(symbolsList.get(i + 3), symbolsList.get(i));
         }
     }
 
     public Symbol getOppositeSymbol(Symbol symbol) {
-        return opposites.get(symbol);
+        return oppositesMap.get(symbol);
+    }
+
+    public boolean isSymbolPresent(Symbol symbol) {
+        return symbolsList.contains(symbol);
     }
 
     public Symbol getSymbol(int index) {

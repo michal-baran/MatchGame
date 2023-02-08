@@ -12,15 +12,22 @@ public class TakeTurn extends Command {
     @Override
     public Command execute() {
         Cube cube = this.game.getCubeInHand();
+        Symbol symbol;
 
-        System.out.printf("Choose symbol from cube: %s\n", cube);
-        Symbol symbol = Symbol.valueOf(this.game.getSc().next().toUpperCase());
-
-        System.out.printf("Choose spot for symbol: %s\n", symbol);
+        while (true) {
+            System.out.printf("%s player turn: Choose a symbol from the cube: %s\n", game.isFirstPlayerTurn() ? "First" : "Second", cube);
+            symbol = Symbol.valueOf(game.getSc().next().toUpperCase());
+            if (cube.isSymbolPresent(symbol)) {
+                break;
+            }
+            System.out.println("Symbol doesn't exist on the present cube!");
+        }
+        System.out.printf("Choose a spot for the symbol: %s\n", symbol);
         String coord = game.getSc().next();
         game.setCubeInHand(coord);
+        game.getBoard().setCubeInSpot(coord, cube, symbol, game.isFirstPlayerTurn());
 
-        this.game.getBoard().setCubeInSpot(coord, cube, symbol, game.isFirstPlayerTurn());
+        this.game.switchPlayers();
         return new Show(game);
     }
 }
