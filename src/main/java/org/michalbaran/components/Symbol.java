@@ -6,7 +6,7 @@ import lombok.Getter;
 @AllArgsConstructor
 @Getter
 public enum Symbol {
-    EMPTY("  ", AnsiColor.RESET),
+    EMP("   ", AnsiColor.RESET),
     SYR("SYR", AnsiColor.YELLOW),
     HED("HED", AnsiColor.RED),
     GRY("GRY", AnsiColor.BLUE),

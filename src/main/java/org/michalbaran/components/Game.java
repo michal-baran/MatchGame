@@ -22,7 +22,7 @@ public class Game {
     private final List<Player> players = new ArrayList<>();
     private Player actPlayer;
     private boolean firstPlayerTurn = true;
-    Scanner sc = new Scanner(System.in);
+    private final Scanner sc = new Scanner(System.in);
 
     public Game(String input) {
         try (Stream<String> inputStream = Files.lines(Path.of(input))) {
@@ -45,10 +45,10 @@ public class Game {
     }
 
     private void setPlayers() {
-        System.out.println("Type name of the first player: ");
-        players.add(new Player(sc.next()));
-        System.out.println("Type name of the second player: ");
-        players.add(new Player(sc.next()));
+        System.out.println("Enter the name of the first player : ");
+        players.add(new Player(getInput()));
+        System.out.println("Enter the name of the second player : ");
+        players.add(new Player(getInput()));
         actPlayer = players.get(0);
     }
 
@@ -63,5 +63,23 @@ public class Game {
 
     public Cube getCube(String coordinates) {
         return board.getCubeFromSpot(coordinates);
+    }
+
+    public String getInput() {
+        String input = sc.next().toUpperCase();
+        if (input.equals("EXIT")) {
+            System.exit(0);
+        }
+        return input;
+    }
+
+    public void showBoard() {
+        board.show(firstPlayerTurn);
+    }
+
+    public void setCubeInSpot(String coordinate, Symbol symbol) {
+        Cube tempCube = board.getCubeFromSpot(coordinate);
+        board.setCubeInSpot(coordinate, cubeInHand, symbol, firstPlayerTurn);
+        cubeInHand = tempCube;
     }
 }

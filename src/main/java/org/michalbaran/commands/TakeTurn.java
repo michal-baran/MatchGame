@@ -15,17 +15,18 @@ public class TakeTurn extends Command {
         Symbol symbol;
 
         while (true) {
-            System.out.printf("%s player turn: Choose a symbol from the cube: %s", game.getActPlayer().getName(), cube);
-            symbol = Symbol.valueOf(game.getSc().next().toUpperCase());
-            if (cube.isSymbolPresent(symbol)) {
+            System.out.printf("%s player turn: Choose a symbol from the cube: %s\n", game.getActPlayer().getName(), cube);
+            try {
+                symbol = Symbol.valueOf(game.getInput());
+                cube.isSymbolPresent(symbol);
                 break;
+            } catch (IllegalArgumentException e) {
+                System.out.println("There is no such symbol!");
             }
-            System.out.println("Symbol doesn't exist on the present cube!");
         }
         System.out.printf("Choose a spot for the symbol: %s\n", symbol);
-        String coord = game.getSc().next();
-        game.setCubeInHand(coord);
-        game.getBoard().setCubeInSpot(coord, cube, symbol, game.isFirstPlayerTurn());
+
+        game.setCubeInSpot(game.getInput(), symbol);
 
         game.switchPlayers();
         return new Show(game);

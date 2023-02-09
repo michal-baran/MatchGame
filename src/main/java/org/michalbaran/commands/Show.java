@@ -10,7 +10,7 @@ public class Show extends Command {
 
     @Override
     public Command execute() {
-        game.getBoard().show(game.isFirstPlayerTurn());
-        return new TakeTurn(this.game);
+        game.showBoard();
+        return new TakeTurn(game);
     }
 }

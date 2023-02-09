@@ -5,6 +5,7 @@ import java.util.List;
 
 public class Board {
     private final List<List<Spot>> spots = new ArrayList<>();
+    private final Cube emptyCube;
 
     public Board(List<Cube> cubes) {
         for (int r = 0; r < 5; r++) {
@@ -14,6 +15,7 @@ public class Board {
             }
             spots.add(spotsRow);
         }
+        emptyCube = cubes.get(cubes.size() - 1);
     }
 
     public void show(boolean firstSide) {
@@ -35,11 +37,12 @@ public class Board {
         char[] chars = coordinate.toUpperCase().toCharArray();
         int column = chars[0] - 65;
         int row = chars[1] - 49;
-
-        return spots
+        Cube tempCube = spots
                 .get(row)
                 .get(column)
                 .getCube();
+        setCubeInSpot(coordinate, emptyCube, Symbol.EMP, true);
+        return tempCube;
     }
 
     public void setCubeInSpot(String coordinate, Cube cube, Symbol symbol, boolean firstPlayer) {
