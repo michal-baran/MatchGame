@@ -29,8 +29,8 @@ public class Cube {
         return oppositesMap.get(symbol);
     }
 
-    public void isSymbolPresent(Symbol symbol) {
-        if (!symbolsList.contains(symbol)) throw new IllegalArgumentException();
+    public boolean isSymbolPresent(Symbol symbol) {
+        return symbolsList.contains(symbol);
     }
 
     public Symbol getSymbol(int index) {

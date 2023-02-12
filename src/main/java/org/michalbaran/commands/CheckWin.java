@@ -11,6 +11,8 @@ public class CheckWin extends Command{
     @Override
     public Command execute() {
         game.checkMatch();
+        game.switchPlayers();
+
         return new Show(this.game);
     }
 }

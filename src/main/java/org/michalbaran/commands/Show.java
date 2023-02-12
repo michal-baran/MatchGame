@@ -11,6 +11,7 @@ public class Show extends Command {
     @Override
     public Command execute() {
         game.showBoard();
+
         return new TakeTurn(game);
     }
 }

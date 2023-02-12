@@ -29,44 +29,64 @@ public class Board {
         for (List<Spot> spotsRow : spots) {
             sb.append(++row);
             for (Spot spot : spotsRow) {
-                sb.append("|").append(firstPlayerTurn ? spot.getSymbol1() : spot.getSymbol2());
+                sb.append("|").append(spot.getSymbol(firstPlayerTurn));
             }
             sb.append("|\n");
         }
         System.out.println(sb);
     }
 
-    public Cube getCubeFromSpot(int[] coords) {
-        Cube tempCube = spots
-                .get(coords[1])
-                .get(coords[0])
+    public Cube getCubeFromSpot(int[] actCoords) {
+        Cube cube = spots
+                .get(actCoords[1])
+                .get(actCoords[0])
                 .getCube();
-        setCubeInSpot(coords, emptyCube, Symbol.EMP, true);
-        return tempCube;
+
+        // set empty cube in spot
+        setCubeInSpot(actCoords, emptyCube, Symbol.EMP, true);
+        return cube;
     }
 
-    public void setCubeInSpot(int[] coords, Cube cube, Symbol symbol, boolean firstPlayerTurn) {
-        Spot spot = spots.get(coords[1]).get(coords[0]);
+    public void setCubeInSpot(int[] actCoords, Cube cube, Symbol symbol, boolean firstPlayerTurn) {
+        Spot spot = spots.get(actCoords[1]).get(actCoords[0]);
         spot.setCube(cube);
+        spot.setSymbol(symbol, firstPlayerTurn);
 
-        if (firstPlayerTurn) {
-            spot.setSymbol1(symbol);
-            spot.setSymbol2(cube.getOppositeSymbol(symbol));
-        } else {
-            spot.setSymbol2(symbol);
-            spot.setSymbol1(cube.getOppositeSymbol(symbol));
-        }
     }
 
-    public boolean checkBoardForMatch(int[] coords, boolean firstPlayerTurn) {
+    public boolean checkBoardForMatch(int[] actCoords, boolean firstPlayerTurn, Symbol actSymbol) {
+        int[] count = new int[4];
+
         // check row
+        for (Spot spot : spots.get(actCoords[1])) {
+            count[0] += spot
+                    .getSymbol(firstPlayerTurn)
+                    .equals(actSymbol) ? 1 : 0;
+        }
 
         // check column
+        for (int i = 0; i < 5; i++) {
+            count[1] += spots
+                    .get(i)
+                    .get(actCoords[0])
+                    .getSymbol(firstPlayerTurn)
+                    .equals(actSymbol) ? 1 : 0;
+        }
 
         // check diagonal
-
+        if (actCoords[0] == actCoords[1]) {
+            for (int i = 0; i < 5; i++) {
+                count[2] += spots
+                        .get(i)
+                        .get(i)
+                        .getSymbol(firstPlayerTurn)
+                        .equals(actSymbol) ? 1 : 0;
+            }
+        }
         // check antidiagonal
-
+        for (int c : count) {
+            if (c == 5) return true;
+        }
         return false;
     }
 }
