@@ -57,7 +57,7 @@ The game has the form of double-sided board with 25 square fields in 5x5 layout.
   </tr>
 </table>
 
-The game comes with fifteen cards with the same symbols as on the dice.
+The game comes with a fifteen cards with the same symbols as on the dice.
 
 In general:
 - there are 15 symbols/characters
@@ -67,9 +67,9 @@ In general:
 <!-- GAME RULES -->
 <h2 id="game-rules"> :grey_question: Game rules</h2>
 
-1. At the beginning, players draw two cards with characters symbols.
+1. At the beginning, players draw two cards with the characters symbols.
 2. The game starts: first player pushes cube on the top-left field - the pushed cube is now on the second player side.
-3. The second player can choose a symbol from cube in his hand, and push it into almost any field on the board (except the one, from which cube comes from). The pushed cube lands on the first player side.
+3. The second player can choose a symbol from the cube in his hand, and push it into almost any field on the board (except the one, from which cube comes from). The pushed cube lands on the first player side.
 4. The first player does the same as the second player in step 3.
 5. The game continues until one of the players has a "match".
 
