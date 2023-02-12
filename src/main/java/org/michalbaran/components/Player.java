@@ -8,14 +8,15 @@ import java.util.Set;
 @Getter
 public class Player {
     private final String name;
-    private Set<Symbol> cards;
+    private final Set<Symbol> cards;
     private int points;
 
-    public Player(String name) {
+    public Player(String name, Symbol card1, Symbol card2) {
         this.name = name;
+        cards = Set.of(card1, card2);
     }
 
-    public void addPoint(){
+    public void addPoint() {
         points++;
     }
 }

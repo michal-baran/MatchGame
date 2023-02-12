@@ -18,7 +18,7 @@ public class Board {
             }
             spots.add(spotsRow);
         }
-        emptyCube = cubes.get(cubes.size() - 1);
+        emptyCube = new Cube("EMP,EMP,EMP,EMP,EMP,EMP");
     }
 
     public void show(boolean firstPlayerTurn) {
