@@ -2,7 +2,7 @@ package org.michalbaran.commands;
 
 import org.michalbaran.components.Game;
 import org.michalbaran.components.Cube;
-import org.michalbaran.components.Symbol;
+import org.michalbaran.enums.Symbol;
 
 public class TakeTurn extends Command {
     public TakeTurn(Game game) {
@@ -24,11 +24,11 @@ public class TakeTurn extends Command {
                 System.out.println("There is no such symbol!");
             }
         }
-        System.out.printf("Choose a spot for the symbol: %s\n", symbol);
-
-        game.setCubeInSpot(game.getInput(), symbol);
-
+        System.out.printf("Type coordinates for symbol %s\n", symbol);
+        game.setCoordinates();
+        game.setCubeInSpot(symbol);
         game.switchPlayers();
-        return new Show(game);
+
+        return new CheckWin(game);
     }
 }

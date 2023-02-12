@@ -2,6 +2,7 @@ package org.michalbaran.components;
 
 import lombok.Getter;
 import lombok.Setter;
+import org.michalbaran.enums.Symbol;
 
 import java.util.Random;
 

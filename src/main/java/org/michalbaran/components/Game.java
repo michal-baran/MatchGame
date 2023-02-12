@@ -3,6 +3,7 @@ package org.michalbaran.components;
 import lombok.Getter;
 import org.michalbaran.commands.Command;
 import org.michalbaran.commands.Show;
+import org.michalbaran.enums.Symbol;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -16,6 +17,7 @@ import java.util.stream.Stream;
 @Getter
 public class Game {
     private Command actCommand;
+    private final int[] lastCoords;
     private List<Cube> cubes;
     private Cube cubeInHand;
     private final Board board;
@@ -33,7 +35,8 @@ public class Game {
             System.out.println("File not found");
         }
         board = new Board(cubes);
-        setCubeInHand("A1");
+        lastCoords = new int[]{0, 0};
+        setCubeInHand();
         setPlayers();
         actCommand = new Show(this);
     }
@@ -52,17 +55,17 @@ public class Game {
         actPlayer = players.get(0);
     }
 
-    public void setCubeInHand(String coord) {
-        cubeInHand = getCube(coord);
-    }
-
     public void switchPlayers() {
         firstPlayerTurn = !firstPlayerTurn;
         actPlayer = players.get(firstPlayerTurn ? 0 : 1);
     }
 
-    public Cube getCube(String coordinates) {
-        return board.getCubeFromSpot(coordinates);
+    public void setCubeInHand() {
+        cubeInHand = getCube();
+    }
+
+    public Cube getCube() {
+        return board.getCubeFromSpot(lastCoords);
     }
 
     public String getInput() {
@@ -77,9 +80,19 @@ public class Game {
         board.show(firstPlayerTurn);
     }
 
-    public void setCubeInSpot(String coordinate, Symbol symbol) {
-        Cube tempCube = board.getCubeFromSpot(coordinate);
-        board.setCubeInSpot(coordinate, cubeInHand, symbol, firstPlayerTurn);
+    public void setCubeInSpot(Symbol symbol) {
+        Cube tempCube = getCube();
+        board.setCubeInSpot(lastCoords, cubeInHand, symbol, firstPlayerTurn);
         cubeInHand = tempCube;
+    }
+
+    public void checkMatch() {
+        board.checkBoardForMatch(lastCoords, firstPlayerTurn);
+    }
+
+    public void setCoordinates() {
+        char[] chars = getInput().toCharArray();
+        lastCoords[0] = chars[0] - 65;
+        lastCoords[1] = chars[1] - 49;
     }
 }

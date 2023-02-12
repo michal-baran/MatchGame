@@ -1,5 +1,7 @@
 package org.michalbaran.components;
 
+import org.michalbaran.enums.Symbol;
+
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;

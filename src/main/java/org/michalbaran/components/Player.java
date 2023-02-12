@@ -1,6 +1,7 @@
 package org.michalbaran.components;
 
 import lombok.Getter;
+import org.michalbaran.enums.Symbol;
 
 import java.util.Set;
 
