@@ -74,13 +74,20 @@ public class Game {
 
     public String getInput() {
         String input = sc.next().toUpperCase();
-        if (input.equals("EXIT")) {
-            System.exit(0);
-        }
-        if (input.equals("STATS")) {
-            for (Player player : players) {
-                System.out.printf("%s has %d points\n", player.getName(), player.getPoints());
-                input = getInput();
+        switch (input) {
+            case "EXIT": {
+                System.exit(0);
+                break;
+            }
+            case "STATS": {
+                for (Player player : players) {
+                    System.out.printf("%s has %d points\n", player.getName(), player.getPoints());
+                }
+                break;
+            }
+            case "SHOW": {
+                showBoard();
+                break;
             }
         }
         return input;
@@ -91,6 +98,7 @@ public class Game {
     }
 
     public void resetBoard() {
+        System.out.println("Preparing new board...");
         Collections.shuffle(cubes);
         Collections.shuffle(cards);
         board = new Board(cubes);
@@ -131,12 +139,15 @@ public class Game {
 
     public void chooseSymbol() {
         while (true) {
-            System.out.printf("Choose a symbol: %s\n", actCube);
-            actSymbol = Symbol.valueOf(getInput());
-            if (actCube.isSymbolPresent(actSymbol)) {
-                break;
+            try {
+                System.out.printf("Choose a symbol: %s\n", actCube);
+                actSymbol = Symbol.valueOf(getInput());
+                if (actCube.isSymbolPresent(actSymbol)) {
+                    break;
+                }
+            } catch (IllegalArgumentException e) {
+                //System.out.println("There is no such symbol on your cube!");
             }
-            System.out.println("There is no such symbol on your cube!");
         }
     }
 }
