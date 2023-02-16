@@ -24,11 +24,16 @@ public class Board {
     public void show(boolean firstPlayerTurn) {
         int row = 0;
         StringBuilder sb = new StringBuilder();
-        sb.append(firstPlayerTurn ? "First" : "Second");
-        sb.append(" player board:\n | A | B | C | D | E |\n");
+        if (firstPlayerTurn) {
+            sb.append("First player board:\n | A | B | C | D | E |\n");
+        } else {
+            sb.append("Second player board:\n | E | D | C | B | A |\n");
+        }
         for (List<Spot> spotsRow : spots) {
             sb.append(++row);
-            for (Spot spot : spotsRow) {
+            for (int i=0; i< spotsRow.size(); i++) {
+                int index = firstPlayerTurn ? i : 4-i;
+                Spot spot = spotsRow.get(index);
                 sb.append("|").append(spot.getSymbol(firstPlayerTurn));
             }
             sb.append("|\n");

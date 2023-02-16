@@ -77,6 +77,12 @@ public class Game {
         if (input.equals("EXIT")) {
             System.exit(0);
         }
+        if (input.equals("STATS")) {
+            for (Player player : players) {
+                System.out.printf("%s has %d points\n", player.getName(), player.getPoints());
+                input = getInput();
+            }
+        }
         return input;
     }
 
