@@ -8,6 +8,7 @@
     <li><a href="#about-the-project">About The Project</a></li>
     <li><a href="#overview">Overview</a></li>
     <li><a href="#game-rules">Game rules</a></li>
+    <li><a href="#commands">Commands</a></li>
   </ol>
 </details>
 <!-- ABOUT THE PROJECT -->
@@ -82,3 +83,11 @@ In general:
 
 Goal:
 The player who scores 5 points wins.
+
+<!-- Commands -->
+<h2 id="commands"> 💡 Commands</h2>
+There are several commands available throughout the game:
+
+- <b>stats</b> - prints players points,
+- <b>cards</b> - prints cards of actual player,
+- <b>exit</b> - exits game
