@@ -19,6 +19,7 @@ This project is inspired by the real game "Match" made by Top Trumps.
 
 The game has the form of double-sided board with 25 square fields in 5x5 layout. There is a cube in each square, and each cube consists of 6 walls with symbols (in this particular case, characters from the Harry Potter series).
 
+Final game should look like this:
 <table>
   <tr>
     <td><img src="/src/main/resources/images/gry.png"></td>
@@ -56,6 +57,12 @@ The game has the form of double-sided board with 25 square fields in 5x5 layout.
     <td><img src="/src/main/resources/images/gry.png"></td>
   </tr>
 </table>
+
+Version 1.0 is prepared for playing in the console. The boards will look like below:
+<br>
+  <img src="/src/main/resources/images/1Pboard.png">
+  <img src="/src/main/resources/images/2Pboard.png">
+
 
 The game comes with a fifteen cards with the same symbols as on the dice.
 
