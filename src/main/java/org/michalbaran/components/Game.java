@@ -1,8 +1,7 @@
 package org.michalbaran.components;
 
 import lombok.Getter;
-import org.michalbaran.commands.Command;
-import org.michalbaran.commands.Show;
+import org.michalbaran.commands.*;
 import org.michalbaran.enums.Symbol;
 
 import java.io.IOException;
@@ -36,21 +35,30 @@ public class Game {
         }
         resetBoard();
         setPlayers();
+        dealCards();
         actCommand = new Show(this);
     }
 
     public void play() {
-        while (true) {
+        do {
             actCommand = actCommand.execute();
-        }
+        } while (actPlayer.getPoints() != 3);
+        System.out.printf("Player %s wins a game with %d points! Congratulations!", actPlayer.getName(), actPlayer.getPoints());
     }
 
     private void setPlayers() {
-        System.out.println("Enter the name of the first player : ");
-        players.add(new Player(getInput(), cards.get(0), cards.get(1)));
-        System.out.println("Enter the name of the second player : ");
-        players.add(new Player(getInput(), cards.get(2), cards.get(3)));
+        for (int i = 1; i <= 2; i++) {
+            System.out.printf("Enter the name of the player %d: ", i);
+            Player tempPlayer = new Player(getInput());
+            players.add(tempPlayer);
+        }
         actPlayer = players.get(0);
+    }
+
+    private void dealCards() {
+        Collections.shuffle(cards);
+        players.get(0).setCards(cards.get(0), cards.get(1));
+        players.get(1).setCards(cards.get(2), cards.get(3));
     }
 
     public void switchPlayers() {
@@ -100,7 +108,6 @@ public class Game {
     public void resetBoard() {
         System.out.println("Preparing new board...");
         Collections.shuffle(cubes);
-        Collections.shuffle(cards);
         board = new Board(cubes);
         Arrays.fill(actCoords, 0);
         setActCube();
@@ -108,8 +115,32 @@ public class Game {
 
     public void checkMatch() {
         if (board.checkBoardForMatch(actCoords, firstPlayerTurn, actSymbol)) {
-            System.out.printf("player %s has a match!\n", actPlayer.getName());
-            actPlayer.addPoint();
+            // Actual player has a match - check if match symbol is present on players cards
+            Player otherPlayer = getActPlayer().equals(players.get(0)) ? players.get(1) : players.get(0);
+            int solution = 1;
+            if (actPlayer.getCards().contains(actSymbol)) {
+                solution = 2;
+            } else if (otherPlayer.getCards().contains(actSymbol)) {
+                solution = 3;
+            }
+
+            switch (solution) {
+                case 1: {
+                    System.out.printf("player %s has a match and scores 1 point!\n", actPlayer.getName());
+                    actPlayer.addPoints(1);
+                    break;
+                }
+                case 2: {
+                    System.out.printf("player %s has a match and also has matching symbol on his cards so scores 2 points!\n", actPlayer.getName());
+                    actPlayer.addPoints(2);
+                    break;
+                }
+                case 3: {
+                    System.out.printf("player %s has a match but player %s has matching symbol on his cards so %s scores 2 points!\n", actPlayer.getName(), otherPlayer.getName(), otherPlayer.getName());
+                    otherPlayer.addPoints(2);
+                    break;
+                }
+            }
             resetBoard();
         }
         if (actPlayer.getPoints() >= 5) {
@@ -140,7 +171,7 @@ public class Game {
     public void chooseSymbol() {
         while (true) {
             try {
-                System.out.printf("Choose a symbol: %s\n", actCube);
+                System.out.printf("Choose a symbol: %s your cards: %s\n", actCube, actPlayer.getCards());
                 actSymbol = Symbol.valueOf(getInput());
                 if (actCube.isSymbolPresent(actSymbol)) {
                     break;
