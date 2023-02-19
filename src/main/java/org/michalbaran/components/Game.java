@@ -42,7 +42,7 @@ public class Game {
     public void play() {
         do {
             actCommand = actCommand.execute();
-        } while (actPlayer.getPoints() != 3);
+        } while (actPlayer.getPoints() < 3);
         System.out.printf("Player %s wins a game with %d points! Congratulations!", actPlayer.getName(), actPlayer.getPoints());
     }
 
@@ -142,8 +142,9 @@ public class Game {
                 }
             }
             resetBoard();
+            dealCards();
         }
-        if (actPlayer.getPoints() >= 5) {
+        if (actPlayer.getPoints() >= 3) {
             System.out.println("Player " + actPlayer.getName() + " wins a game!");
         }
     }
