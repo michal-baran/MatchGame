@@ -33,7 +33,12 @@ public class Spot {
         this.cube = cube;
     }
 
-    public Cube getCube(){
+    public Cube getCube() {
         return cube;
+    }
+
+    public void getNextSymbol() {
+        symbol1 = cube.switchToNextSymbol(symbol1);
+        symbol2 = cube.getOppositeSymbol(symbol1);
     }
 }

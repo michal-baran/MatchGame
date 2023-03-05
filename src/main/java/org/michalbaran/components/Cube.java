@@ -37,6 +37,11 @@ public class Cube {
         return symbolsList.get(index);
     }
 
+    public Symbol switchToNextSymbol(Symbol symbol) {
+        int index = symbolsList.indexOf(symbol);
+        return symbolsList.get((index + 1) % 5);
+    }
+
     @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();

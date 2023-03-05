@@ -83,13 +83,13 @@ public class Game {
     public String getInput() {
         String input = sc.next().toUpperCase();
         switch (input) {
-            case "EXIT": {
+            case "QUIT": {
                 System.exit(0);
                 break;
             }
-            case "STATS": {
+            case "POINTS": {
                 for (Player player : players) {
-                    System.out.printf("%s has %d points\n", player.getName(), player.getPoints());
+                    System.out.printf("%s points: %d\n", player.getName(), player.getPoints());
                 }
                 break;
             }
@@ -102,7 +102,7 @@ public class Game {
     }
 
     public void showBoard() {
-        board.show(firstPlayerTurn);
+        board.show(actPlayer.getName(), firstPlayerTurn);
     }
 
     public void resetBoard() {
@@ -126,17 +126,17 @@ public class Game {
 
             switch (solution) {
                 case 1: {
-                    System.out.printf("player %s has a match and scores 1 point!\n", actPlayer.getName());
+                    System.out.printf("Player %s has a match and scores 1 point!\n", actPlayer.getName());
                     actPlayer.addPoints(1);
                     break;
                 }
                 case 2: {
-                    System.out.printf("player %s has a match and also has matching symbol on his cards so scores 2 points!\n", actPlayer.getName());
+                    System.out.printf("Player %s has a match and also has matching symbol on his cards so scores 2 points!\n", actPlayer.getName());
                     actPlayer.addPoints(2);
                     break;
                 }
                 case 3: {
-                    System.out.printf("player %s has a match but player %s has matching symbol on his cards so %s scores 2 points!\n", actPlayer.getName(), otherPlayer.getName(), otherPlayer.getName());
+                    System.out.printf("Player %s has a match but player %s has matching symbol on his cards so %s scores 2 points!\n", actPlayer.getName(), otherPlayer.getName(), otherPlayer.getName());
                     otherPlayer.addPoints(2);
                     break;
                 }
@@ -178,7 +178,7 @@ public class Game {
                     break;
                 }
             } catch (IllegalArgumentException e) {
-                //System.out.println("There is no such symbol on your cube!");
+                // catch block intentionally blank
             }
         }
     }

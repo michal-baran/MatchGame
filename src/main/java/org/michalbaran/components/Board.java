@@ -9,7 +9,6 @@ public class Board {
     private final List<List<Spot>> spots = new ArrayList<>();
     private final Cube emptyCube;
 
-
     public Board(List<Cube> cubes) {
         for (int r = 0; r < 5; r++) {
             List<Spot> spotsRow = new ArrayList<>();
@@ -19,20 +18,75 @@ public class Board {
             spots.add(spotsRow);
         }
         emptyCube = new Cube("EMP,EMP,EMP,EMP,EMP,EMP");
+        ensureUniqueness(true);
     }
 
-    public void show(boolean firstPlayerTurn) {
-        int row = 0;
-        StringBuilder sb = new StringBuilder();
-        if (firstPlayerTurn) {
-            sb.append("First player board:\n | A | B | C | D | E |\n");
-        } else {
-            sb.append("Second player board:\n | E | D | C | B | A |\n");
+    public Cube getCubeFromSpot(int[] coords) {
+        Cube cube = spots
+                .get(coords[1])
+                .get(coords[0])
+                .getCube();
+
+        // set empty cube in spot
+        setCubeInSpot(coords, emptyCube, Symbol.EMP, true);
+        return cube;
+    }
+
+    public void setCubeInSpot(int[] coords, Cube cube, Symbol symbol, boolean firstPlayerTurn) {
+        Spot spot = spots.get(coords[1]).get(coords[0]);
+        spot.setCube(cube);
+        spot.setSymbol(symbol, firstPlayerTurn);
+
+    }
+
+    public void ensureUniqueness(boolean side) {
+        // należy sprawdzić pole i porównać sąsiadujące pola po prawej, na dole i po prawej na dole
+        for (int row = 0; row < spots.size(); row++) {
+            for (int col = 0; col < spots.get(row).size(); col++) {
+                Spot spot = spots.get(row).get(col);
+                Symbol checked = spot.getSymbol(side);   // sprawdzany symbol
+                List<Symbol> symbols = new ArrayList<>();
+
+                if (row > 0) {
+                    Symbol onTop = spots.get(row - 1).get(col).getSymbol(side);  //sprawdzenie pola u góry
+                    symbols.add(onTop);
+                    if (col < 4) {
+                        Symbol onTopRight = spots.get(row - 1).get(col + 1).getSymbol(side);  //sprawdzenie pola u góry po prawej
+                        symbols.add(onTopRight);
+                    }
+                }
+                if (col < 4) {
+                    Symbol onRight = spots.get(row).get(col + 1).getSymbol(side);   //sprawdzenie pola po prawej
+                    symbols.add(onRight);
+                    if (row < 4) {
+                        Symbol onBottomRight = spots.get(row + 1).get(col + 1).getSymbol(side); //sprawdzenie pola na dole po prawej
+                        symbols.add(onBottomRight);
+                    }
+                }
+                if (row < 4) {
+                    Symbol onBottom = spots.get(row + 1).get(col).getSymbol(side);  //sprawdzenie pola na dole
+                    symbols.add(onBottom);
+                }
+                boolean notUnique = symbols.contains(checked);
+                while (notUnique) {
+                    System.out.printf("Spot [%d,%d] not unique\n", row, col);
+                    spot.getNextSymbol();
+                    checked = spot.getSymbol(side);
+                    notUnique = symbols.contains(checked);
+                }
+            }
         }
+    }
+
+    public void show(String name, boolean firstPlayerTurn) {
+        int row = 0;
+        StringBuilder sb = new StringBuilder(name + "'s board:\n");
+        sb.append(firstPlayerTurn ? " | A | B | C | D | E |\n" : " | E | D | C | B | A |\n");
+
         for (List<Spot> spotsRow : spots) {
             sb.append(++row);
-            for (int i=0; i< spotsRow.size(); i++) {
-                int index = firstPlayerTurn ? i : 4-i;
+            for (int i = 0; i < spotsRow.size(); i++) {
+                int index = firstPlayerTurn ? i : 4 - i;
                 Spot spot = spotsRow.get(index);
                 sb.append("|").append(spot.getSymbol(firstPlayerTurn));
             }
@@ -41,29 +95,11 @@ public class Board {
         System.out.println(sb);
     }
 
-    public Cube getCubeFromSpot(int[] actCoords) {
-        Cube cube = spots
-                .get(actCoords[1])
-                .get(actCoords[0])
-                .getCube();
-
-        // set empty cube in spot
-        setCubeInSpot(actCoords, emptyCube, Symbol.EMP, true);
-        return cube;
-    }
-
-    public void setCubeInSpot(int[] actCoords, Cube cube, Symbol symbol, boolean firstPlayerTurn) {
-        Spot spot = spots.get(actCoords[1]).get(actCoords[0]);
-        spot.setCube(cube);
-        spot.setSymbol(symbol, firstPlayerTurn);
-
-    }
-
-    public boolean checkBoardForMatch(int[] actCoords, boolean firstPlayerTurn, Symbol actSymbol) {
+    public boolean checkBoardForMatch(int[] coords, boolean firstPlayerTurn, Symbol actSymbol) {
         int[] count = new int[4];
 
         // check row
-        for (Spot spot : spots.get(actCoords[1])) {
+        for (Spot spot : spots.get(coords[1])) {
             count[0] += spot
                     .getSymbol(firstPlayerTurn)
                     .equals(actSymbol) ? 1 : 0;
@@ -73,13 +109,13 @@ public class Board {
         for (int i = 0; i < 5; i++) {
             count[1] += spots
                     .get(i)
-                    .get(actCoords[0])
+                    .get(coords[0])
                     .getSymbol(firstPlayerTurn)
                     .equals(actSymbol) ? 1 : 0;
         }
 
         // check diagonal
-        if (actCoords[0] == actCoords[1]) {
+        if (coords[0] == coords[1]) {
             for (int i = 0; i < 5; i++) {
                 count[2] += spots
                         .get(i)
@@ -94,4 +130,6 @@ public class Board {
         }
         return false;
     }
+
+
 }
