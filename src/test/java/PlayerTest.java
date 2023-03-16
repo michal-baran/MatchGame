@@ -12,12 +12,11 @@ class PlayerTest {
 
     @BeforeEach
     void setUp() {
-        player = new Player("First player");
+        player = new Player("John");
     }
 
     @Test
     public void testNewPlayer() {
-        Player player = new Player("John");
         assertNotNull(player);
         assertEquals("John", player.getName());
         assertNull(player.getCards());
@@ -26,21 +25,19 @@ class PlayerTest {
 
     @Test
     public void testGetName() {
-        assertEquals("First player", player.getName());
+        assertEquals("John", player.getName());
     }
 
     @Test
     public void testAddPoints() {
-        Player player = new Player("Johhny");
         player.addPoints(3);
-        assertEquals(5, player.getPoints());
-        player.addPoints(3);
+        assertEquals(3, player.getPoints());
+        player.addPoints(5);
         assertEquals(8, player.getPoints());
     }
 
     @Test
     public void testSetCards() {
-        Player player = new Player("John");
         player.setCards(Symbol.HED, Symbol.TRE);
         Set<Symbol> expected = Set.of(Symbol.HED, Symbol.TRE);
         assertEquals(expected, player.getCards());

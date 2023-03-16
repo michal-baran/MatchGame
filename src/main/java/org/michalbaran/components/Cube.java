@@ -39,7 +39,7 @@ public class Cube {
 
     public Symbol switchToNextSymbol(Symbol symbol) {
         int index = symbolsList.indexOf(symbol);
-        return symbolsList.get((index + 1) % 5);
+        return symbolsList.get((index + 1) % 6);
     }
 
     @Override
