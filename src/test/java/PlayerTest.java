@@ -31,7 +31,7 @@ class PlayerTest {
 
     @Test
     public void testAddPoints() {
-        Player player = new Player("John");
+        Player player = new Player("Johhny");
         player.addPoints(5);
         assertEquals(5, player.getPoints());
         player.addPoints(3);
