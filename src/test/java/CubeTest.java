@@ -51,7 +51,7 @@ public class CubeTest {
     }
 
     @Test
-    public void testSetOppositeSymbol(){
+    public void testSetOppositeSymbol() {
         assertEquals(Symbol.MCG, cube.getOppositeSymbol(Symbol.HED));
         assertEquals(Symbol.ZGR, cube.getOppositeSymbol(Symbol.DUM));
         assertEquals(Symbol.TON, cube.getOppositeSymbol(Symbol.HAR));
