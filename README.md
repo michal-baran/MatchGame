@@ -1,4 +1,4 @@
-<h1 align="center">MatchGame - two player logic game</h1>
+# Match Game - two player logic game [![Java CI with Gradle](https://github.com/michal-baran/MatchGame/actions/workflows/gradle.yml/badge.svg)](https://github.com/michal-baran/MatchGame/actions/workflows/gradle.yml)
 
 <!-- TABLE OF CONTENTS -->
 <h2 id="about-the-project">Table of contents</h2>
@@ -65,7 +65,7 @@ Version 1.0 is prepared for playing in the console. The boards will look like be
   <img src="/src/main/resources/images/2Pboard.png">
 
 
-The game comes with a fifteen cards with the same symbols as on the dice.
+The game comes with fifteen cards with the same symbols as on the dice.
 
 In general:
 - there are 15 symbols/characters
