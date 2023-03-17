@@ -22,8 +22,9 @@ test {
 group = 'org.michalbaran'
 version = '1.0-SNAPSHOT'
 description = 'MatchGame'
-java.sourceCompatibility = JavaVersion.VERSION_1_8
+java.sourceCompatibility = JavaVersion.VERSION_11
 
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
 }
+targetCompatibility = JavaVersion.VERSION_11
