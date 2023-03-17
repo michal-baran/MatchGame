@@ -30,7 +30,7 @@ class PlayerTest {
 
     @Test
     public void testAddPoints() {
-        player.addPoints(1);
+        player.addPoints(3);
         assertEquals(3, player.getPoints());
         player.addPoints(5);
         assertEquals(8, player.getPoints());
