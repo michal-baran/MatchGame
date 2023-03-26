@@ -70,7 +70,7 @@ public class Board {
                 boolean notUnique = symbols.contains(checked);
                 while (notUnique) {
                     System.out.printf("Spot [%d,%d] not unique\n", row, col);
-                    spot.getNextSymbol();
+                    spot.setToNextSymbol();
                     checked = spot.getSymbol(side);
                     notUnique = symbols.contains(checked);
                 }

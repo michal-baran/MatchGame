@@ -2,8 +2,6 @@ package org.michalbaran.components;
 
 import org.michalbaran.enums.Symbol;
 
-import java.util.Random;
-
 public class Spot {
     private Cube cube;
     private Symbol symbol1;
@@ -11,7 +9,7 @@ public class Spot {
 
     public Spot(Cube cube) {
         this.cube = cube;
-        this.symbol1 = cube.getSymbol(new Random().nextInt(6));
+        this.symbol1 = cube.getSymbol(0);
         this.symbol2 = cube.getOppositeSymbol(symbol1);
     }
 
@@ -37,7 +35,7 @@ public class Spot {
         return cube;
     }
 
-    public void getNextSymbol() {
+    public void setToNextSymbol() {
         symbol1 = cube.switchToNextSymbol(symbol1);
         symbol2 = cube.getOppositeSymbol(symbol1);
     }
