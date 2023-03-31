@@ -25,34 +25,34 @@ public class Game {
     private Player actPlayer;
     private boolean firstPlayerTurn = true;
 
-    public Game() {
-        try (Stream<String> cubesStream = Files.lines(Path.of("src/main/resources/Cubes.txt"));
-             Stream<String> cardsStream = Files.lines(Path.of("src/main/resources/Cards.txt"))) {
+    public Game(String path) {
+        System.out.println(path + "Cubes.txt");
+        try (Stream<String> cubesStream = Files.lines(Path.of(path + "Cubes.txt"));
+             Stream<String> cardsStream = Files.lines(Path.of(path + "Cards.txt"))) {
             cubes = cubesStream.map(Cube::new).collect(Collectors.toList());
             cards = cardsStream.map(Symbol::valueOf).collect(Collectors.toList());
         } catch (IOException e) {
             System.out.println("File not found");
         }
         resetBoard();
-        setPlayers();
-        dealCards();
         actCommand = new Show(this);
     }
 
     public void play() {
-        do {
+        while (actPlayer.getPoints() < 3) {
             actCommand = actCommand.execute();
-        } while (actPlayer.getPoints() < 3);
+        }
         System.out.printf("Player %s wins a game with %d points! Congratulations!", actPlayer.getName(), actPlayer.getPoints());
     }
 
-    private void setPlayers() {
+    public void setPlayers() {
         for (int i = 1; i <= 2; i++) {
             System.out.printf("Enter the name of the player %d: ", i);
             Player tempPlayer = new Player(getInput());
             players.add(tempPlayer);
         }
         actPlayer = players.get(0);
+        dealCards();
     }
 
     private void dealCards() {
@@ -97,15 +97,25 @@ public class Game {
                 showBoard();
                 break;
             }
+            case "HELP": {
+                System.out.println("====Accessible commands=====\n" +
+                        "QUIT - exits the game\n" +
+                        "POINTS - shows actual points for each player\n" +
+                        "SHOW - prints board for actual player\n");
+                break;
+            }
+            default: {
+                return input;
+            }
         }
-        return input;
+        return getInput();
     }
 
     public void showBoard() {
         board.show(actPlayer.getName(), firstPlayerTurn);
     }
 
-    public void resetBoard() {
+    private void resetBoard() {
         System.out.println("Preparing new board...");
         Collections.shuffle(cubes);
         board = new Board(cubes);
