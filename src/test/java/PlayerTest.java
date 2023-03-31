@@ -8,7 +8,7 @@ import java.util.Set;
 import static org.junit.jupiter.api.Assertions.*;
 
 class PlayerTest {
-    Player player;
+    private Player player;
 
     @BeforeEach
     void setUp() {

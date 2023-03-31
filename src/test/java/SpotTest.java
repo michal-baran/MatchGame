@@ -8,8 +8,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 public class SpotTest {
-    Spot spot;
-    Cube cube = new Cube("HED,DUM,HAR,MCG,ZGR,TON");
+    private Spot spot;
+    private final Cube cube = new Cube("HED,DUM,HAR,MCG,ZGR,TON");
 
     @BeforeEach
     void setUp() {
@@ -30,21 +30,26 @@ public class SpotTest {
 
     @Test
     public void testSetCube() {
-        Cube actual = new Cube("DRA,HED,RON,TON,ZGR,LUN");
-        spot.setCube(actual);
-        assertEquals(actual, spot.getCube());
+        Cube newCube = new Cube("DRA,HED,RON,TON,ZGR,LUN");
+        spot.setCube(newCube);
+        assertEquals(newCube, spot.getCube());
+    }
+
+    @Test
+    public void testGetSymbol() {
+        assertEquals(Symbol.HED, spot.getSymbol(true));
+        assertEquals(Symbol.MCG, spot.getSymbol(false));
     }
 
     @Test
     public void testSetSymbol() {
         spot.setSymbol(Symbol.HAR, true);
-        assertEquals(spot.getSymbol(true), Symbol.HAR);
-        assertEquals(spot.getSymbol(false), Symbol.TON);
-    }
+        assertEquals(Symbol.HAR, spot.getSymbol(true));
+        assertEquals(Symbol.TON, spot.getSymbol(false));
 
-    @Test
-    public void testGetSymbol() {
-        assertEquals(cube, spot.getCube());
+        spot.setSymbol(Symbol.MCG, false);
+        assertEquals(Symbol.HED, spot.getSymbol(true));
+        assertEquals(Symbol.MCG, spot.getSymbol(false));
     }
 
     @Test

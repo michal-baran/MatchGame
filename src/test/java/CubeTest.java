@@ -6,11 +6,21 @@ import org.michalbaran.enums.Symbol;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class CubeTest {
-    Cube cube;
+    private Cube cube;
 
     @BeforeEach
     void setUp() {
         cube = new Cube("HED,DUM,HAR,MCG,ZGR,TON");
+    }
+
+    @Test
+    public void testNewCube() {
+        assertNotNull(cube.getSymbol(0));
+        assertNotNull(cube.getSymbol(1));
+        assertNotNull(cube.getSymbol(2));
+        assertNotNull(cube.getSymbol(3));
+        assertNotNull(cube.getSymbol(4));
+        assertNotNull(cube.getSymbol(5));
     }
 
     @Test
@@ -51,13 +61,24 @@ public class CubeTest {
     }
 
     @Test
-    public void testSetOppositeSymbol() {
+    public void testGetOppositeSymbol() {
         assertEquals(Symbol.MCG, cube.getOppositeSymbol(Symbol.HED));
         assertEquals(Symbol.ZGR, cube.getOppositeSymbol(Symbol.DUM));
         assertEquals(Symbol.TON, cube.getOppositeSymbol(Symbol.HAR));
         assertEquals(Symbol.HED, cube.getOppositeSymbol(Symbol.MCG));
         assertEquals(Symbol.DUM, cube.getOppositeSymbol(Symbol.ZGR));
         assertEquals(Symbol.HAR, cube.getOppositeSymbol(Symbol.TON));
+    }
 
+    @Test
+    public void testToString() {
+        String expected = "[" + Symbol.HED + ", " +
+                Symbol.DUM + ", " +
+                Symbol.HAR + ", " +
+                Symbol.MCG + ", " +
+                Symbol.ZGR + ", " +
+                Symbol.TON + "]";
+        String actual = cube.toString();
+        assertEquals(expected, actual);
     }
 }
