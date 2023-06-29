@@ -89,6 +89,7 @@ The player who scores 5 points wins.
 <h2 id="commands"> 💡 Commands</h2>
 There are several commands available throughout the game:
 
-- <b>stats</b> - prints players points,
-- <b>cards</b> - prints cards of actual player,
-- <b>exit</b> - exits game
+- <b>/help</b> - shows available additional commands,
+- <b>/points</b> - prints players points,
+- <b>/show</b> - prints actual player board,
+- <b>/quit</b> - exits game
