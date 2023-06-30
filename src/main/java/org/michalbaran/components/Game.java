@@ -1,13 +1,12 @@
 package org.michalbaran.components;
 
 import lombok.Getter;
-import org.michalbaran.commands.*;
+import org.michalbaran.commands.Command;
+import org.michalbaran.commands.Show;
 import org.michalbaran.enums.Symbol;
 
-import java.io.IOException;
-import java.net.URISyntaxException;
-import java.nio.file.Files;
-import java.nio.file.Path;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -27,25 +26,22 @@ public class Game {
     private boolean firstPlayerTurn = true;
 
     public Game() {
-        try (Stream<String> cubesStream = Files.lines(Path.of(getClass()
-                .getClassLoader()
-                .getResource("Cubes.txt")
-                .toURI()));
-             Stream<String> cardsStream = Files.lines(Path.of(getClass()
-                     .getClassLoader()
-                     .getResource("Cards.txt").toURI()))) {
 
+        try (Stream<String> cubesStream = new BufferedReader(new InputStreamReader(getClass().getClassLoader().getResourceAsStream("Cubes.txt"))).lines();
+             Stream<String> cardsStream = new BufferedReader(new InputStreamReader(getClass().getClassLoader().getResourceAsStream("Cards.txt"))).lines()) {
             cubes = cubesStream
                     .map(Cube::new)
                     .collect(Collectors.toList());
             cards = cardsStream
                     .map(Symbol::valueOf)
                     .collect(Collectors.toList());
-        } catch (IOException | URISyntaxException e) {
+        } catch (Exception e) {
             System.out.println("File not found");
         }
         resetBoard();
-        actCommand = new Show(this);
+
+        actCommand = new
+                Show(this);
     }
 
     public void play() {
@@ -101,7 +97,7 @@ public class Game {
             }
             case "/SHOW" -> showBoard();
             case "/HELP" -> System.out.println("""
-                    ====Accessible commands=====
+                    ==== Accessible commands =====
                     /quit, - exits the game
                     /points - shows actual points for each player
                     /show - prints board for actual player
@@ -140,22 +136,25 @@ public class Game {
                 case 1: {
                     System.out.printf("Player %s has a match and scores 1 point!\n", actPlayer.getName());
                     actPlayer.addPoints(1);
+                    break;
                 }
                 case 2: {
                     System.out.printf("Player %s has a match and also has matching symbol on his cards so scores 2 points!\n", actPlayer.getName());
                     actPlayer.addPoints(2);
+                    break;
                 }
                 case 3: {
                     System.out.printf("Player %s has a match but player %s has matching symbol on his cards so %s scores 2 points!\n", actPlayer.getName(), otherPlayer.getName(), otherPlayer.getName());
                     otherPlayer.addPoints(2);
+                    break;
                 }
             }
-            resetBoard();
-            dealCards();
+            if (actPlayer.getPoints() < 3) {
+                resetBoard();
+                dealCards();
+            }
         }
-        if (actPlayer.getPoints() >= 3) {
-            System.out.println("Player " + actPlayer.getName() + " wins a game!");
-        } else {
+        if (actPlayer.getPoints() < 3) {
             this.switchPlayers();
         }
     }
