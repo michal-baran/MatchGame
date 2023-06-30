@@ -1,11 +1,17 @@
 package org.michalbaran;
 
 import org.michalbaran.components.Game;
+import org.michalbaran.components.GameFactory;
 
 public class Main {
     public static void main(String[] args) {
-        Game game = new Game("src/main/resources/");
+        // Game initialization
+        Game game = GameFactory.createGame("src/main/resources/");
+
+        // Set players
         game.setPlayers();
+
+        // Game start
         game.play();
     }
 }

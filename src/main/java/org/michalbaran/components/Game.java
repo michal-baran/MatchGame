@@ -26,11 +26,15 @@ public class Game {
     private boolean firstPlayerTurn = true;
 
     public Game(String path) {
-        System.out.println(path + "Cubes.txt");
+        //System.out.println(path + "Cubes.txt");
         try (Stream<String> cubesStream = Files.lines(Path.of(path + "Cubes.txt"));
              Stream<String> cardsStream = Files.lines(Path.of(path + "Cards.txt"))) {
-            cubes = cubesStream.map(Cube::new).collect(Collectors.toList());
-            cards = cardsStream.map(Symbol::valueOf).collect(Collectors.toList());
+            cubes = cubesStream
+                    .map(Cube::new)
+                    .collect(Collectors.toList());
+            cards = cardsStream
+                    .map(Symbol::valueOf)
+                    .collect(Collectors.toList());
         } catch (IOException e) {
             System.out.println("File not found");
         }
@@ -83,28 +87,17 @@ public class Game {
     public String getInput() {
         String input = sc.next().toUpperCase();
         switch (input) {
-            case "QUIT": {
-                System.exit(0);
-                break;
-            }
-            case "POINTS": {
-                for (Player player : players) {
+            case "/QUIT" -> System.exit(0);
+            case "/POINTS" -> {
+                for (Player player : players)
                     System.out.printf("%s points: %d\n", player.getName(), player.getPoints());
-                }
-                break;
             }
-            case "SHOW": {
-                showBoard();
-                break;
-            }
-            case "HELP": {
-                System.out.println("====Accessible commands=====\n" +
-                        "QUIT - exits the game\n" +
-                        "POINTS - shows actual points for each player\n" +
-                        "SHOW - prints board for actual player\n");
-                break;
-            }
-            default: {
+            case "/SHOW" -> showBoard();
+            case "/HELP" -> System.out.println("====Accessible commands=====\n" +
+                    "/quit, - exits the game\n" +
+                    "/points - shows actual points for each player\n" +
+                    "/show - prints board for actual player\n");
+            default -> {
                 return input;
             }
         }
@@ -116,7 +109,7 @@ public class Game {
     }
 
     private void resetBoard() {
-        System.out.println("Preparing new board...");
+        System.out.println("\nPreparing new board...");
         Collections.shuffle(cubes);
         board = new Board(cubes);
         Arrays.fill(actCoords, 0);
@@ -135,20 +128,17 @@ public class Game {
             }
 
             switch (solution) {
-                case 1: {
+                case 1 -> {
                     System.out.printf("Player %s has a match and scores 1 point!\n", actPlayer.getName());
                     actPlayer.addPoints(1);
-                    break;
                 }
-                case 2: {
+                case 2 -> {
                     System.out.printf("Player %s has a match and also has matching symbol on his cards so scores 2 points!\n", actPlayer.getName());
                     actPlayer.addPoints(2);
-                    break;
                 }
-                case 3: {
+                case 3 -> {
                     System.out.printf("Player %s has a match but player %s has matching symbol on his cards so %s scores 2 points!\n", actPlayer.getName(), otherPlayer.getName(), otherPlayer.getName());
                     otherPlayer.addPoints(2);
-                    break;
                 }
             }
             resetBoard();
@@ -156,6 +146,8 @@ public class Game {
         }
         if (actPlayer.getPoints() >= 3) {
             System.out.println("Player " + actPlayer.getName() + " wins a game!");
+        } else {
+            this.switchPlayers();
         }
     }
 
@@ -187,8 +179,9 @@ public class Game {
                 if (actCube.isSymbolPresent(actSymbol)) {
                     break;
                 }
+                System.out.println("Symbol is not accessible on your cube!");
             } catch (IllegalArgumentException e) {
-                // catch block intentionally blank
+                System.out.println("Invalid input!");
             }
         }
     }

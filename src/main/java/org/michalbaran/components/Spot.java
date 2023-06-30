@@ -4,27 +4,27 @@ import org.michalbaran.enums.Symbol;
 
 public class Spot {
     private Cube cube;
-    private Symbol symbol1;
-    private Symbol symbol2;
+    private Symbol side1;
+    private Symbol side2;
 
     public Spot(Cube cube) {
         this.cube = cube;
-        this.symbol1 = cube.getSymbol(0);
-        this.symbol2 = cube.getOppositeSymbol(symbol1);
+        this.side1 = cube.getSymbol(0);
+        this.side2 = cube.getOppositeSymbol(side1);
     }
 
     public void setSymbol(Symbol symbol, boolean firstPlayerTurn) {
         if (firstPlayerTurn) {
-            symbol1 = symbol;
-            symbol2 = cube.getOppositeSymbol(symbol);
+            side1 = symbol;
+            side2 = cube.getOppositeSymbol(symbol);
         } else {
-            symbol2 = symbol;
-            symbol1 = cube.getOppositeSymbol(symbol);
+            side2 = symbol;
+            side1 = cube.getOppositeSymbol(symbol);
         }
     }
 
     public Symbol getSymbol(boolean firstPlayerTurn) {
-        return firstPlayerTurn ? symbol1 : symbol2;
+        return firstPlayerTurn ? side1 : side2;
     }
 
     public void setCube(Cube cube) {
@@ -36,7 +36,7 @@ public class Spot {
     }
 
     public void setToNextSymbol() {
-        symbol1 = cube.switchToNextSymbol(symbol1);
-        symbol2 = cube.getOppositeSymbol(symbol1);
+        side1 = cube.switchToNextSymbol(side1);
+        side2 = cube.getOppositeSymbol(side1);
     }
 }
