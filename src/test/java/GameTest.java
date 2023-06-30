@@ -10,7 +10,7 @@ public class GameTest {
 
     @BeforeEach
     public void setUp() {
-        game = new Game("src/test/resources/");
+        game = new Game();
     }
 
     @Test

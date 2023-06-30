@@ -5,6 +5,7 @@ import org.michalbaran.commands.*;
 import org.michalbaran.enums.Symbol;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
@@ -25,17 +26,22 @@ public class Game {
     private Player actPlayer;
     private boolean firstPlayerTurn = true;
 
-    public Game(String path) {
-        //System.out.println(path + "Cubes.txt");
-        try (Stream<String> cubesStream = Files.lines(Path.of(path + "Cubes.txt"));
-             Stream<String> cardsStream = Files.lines(Path.of(path + "Cards.txt"))) {
+    public Game() {
+        try (Stream<String> cubesStream = Files.lines(Path.of(getClass()
+                .getClassLoader()
+                .getResource("Cubes.txt")
+                .toURI()));
+             Stream<String> cardsStream = Files.lines(Path.of(getClass()
+                     .getClassLoader()
+                     .getResource("Cards.txt").toURI()))) {
+
             cubes = cubesStream
                     .map(Cube::new)
                     .collect(Collectors.toList());
             cards = cardsStream
                     .map(Symbol::valueOf)
                     .collect(Collectors.toList());
-        } catch (IOException e) {
+        } catch (IOException | URISyntaxException e) {
             System.out.println("File not found");
         }
         resetBoard();

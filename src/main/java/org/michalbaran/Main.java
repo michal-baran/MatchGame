@@ -6,7 +6,7 @@ import org.michalbaran.components.GameFactory;
 public class Main {
     public static void main(String[] args) {
         // Game initialization
-        Game game = GameFactory.createGame("src/main/resources/");
+        Game game = GameFactory.createGame();
 
         // Set players
         game.setPlayers();
