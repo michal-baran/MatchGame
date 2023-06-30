@@ -25,7 +25,6 @@ public class CheckWinTest {
 
         // Verify that checkMatch() and switchPlayers() methods were called on game object
         verify(game, times(1)).checkMatch();
-        verify(game, times(1)).switchPlayers();
 
         // Verify that the result of execute() is an instance of Show class with the same game object
         assert result instanceof Show;

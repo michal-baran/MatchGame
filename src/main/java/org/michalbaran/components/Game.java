@@ -89,14 +89,17 @@ public class Game {
         switch (input) {
             case "/QUIT" -> System.exit(0);
             case "/POINTS" -> {
-                for (Player player : players)
+                for (Player player : players) {
                     System.out.printf("%s points: %d\n", player.getName(), player.getPoints());
+                }
             }
             case "/SHOW" -> showBoard();
-            case "/HELP" -> System.out.println("====Accessible commands=====\n" +
-                    "/quit, - exits the game\n" +
-                    "/points - shows actual points for each player\n" +
-                    "/show - prints board for actual player\n");
+            case "/HELP" -> System.out.println("""
+                    ====Accessible commands=====
+                    /quit, - exits the game
+                    /points - shows actual points for each player
+                    /show - prints board for actual player
+                    """);
             default -> {
                 return input;
             }
@@ -128,15 +131,15 @@ public class Game {
             }
 
             switch (solution) {
-                case 1 -> {
+                case 1: {
                     System.out.printf("Player %s has a match and scores 1 point!\n", actPlayer.getName());
                     actPlayer.addPoints(1);
                 }
-                case 2 -> {
+                case 2: {
                     System.out.printf("Player %s has a match and also has matching symbol on his cards so scores 2 points!\n", actPlayer.getName());
                     actPlayer.addPoints(2);
                 }
-                case 3 -> {
+                case 3: {
                     System.out.printf("Player %s has a match but player %s has matching symbol on his cards so %s scores 2 points!\n", actPlayer.getName(), otherPlayer.getName(), otherPlayer.getName());
                     otherPlayer.addPoints(2);
                 }
