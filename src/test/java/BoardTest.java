@@ -3,9 +3,9 @@ import org.junit.jupiter.api.Test;
 import org.michalbaran.components.Board;
 import org.michalbaran.components.Cube;
 
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
+import java.io.InputStreamReader;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -18,7 +18,7 @@ public class BoardTest {
 
     @BeforeEach
     public void setUp() throws IOException {
-        try (Stream<String> cubesStream = Files.lines(Path.of("src/test/resources/Cubes.txt"))) {
+        try (Stream<String> cubesStream = new BufferedReader(new InputStreamReader(getClass().getClassLoader().getResourceAsStream("Cubes.txt"))).lines()) {
             cubes = cubesStream.map(Cube::new).collect(Collectors.toList());
         }
         board = new Board(cubes);
@@ -61,5 +61,11 @@ public class BoardTest {
         expectedCube = cubes.get(8);
         actualCube = board.getCubeFromSpot(new int[]{3, 1});
         assertEquals(expectedCube, actualCube);
+    }
+
+    @Test
+    public void testWinningRow(){
+
+
     }
 }

@@ -7,7 +7,6 @@ import org.michalbaran.components.Game;
 public class GameTest {
     private Game game;
 
-
     @BeforeEach
     public void setUp() {
         game = new Game();

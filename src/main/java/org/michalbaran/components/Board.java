@@ -103,7 +103,6 @@ public class Board {
                     .getSymbol(firstPlayerTurn)
                     .equals(actSymbol) ? 1 : 0;
         }
-
         // check column
         for (int i = 0; i < 5; i++) {
             count[1] += spots
@@ -112,7 +111,6 @@ public class Board {
                     .getSymbol(firstPlayerTurn)
                     .equals(actSymbol) ? 1 : 0;
         }
-
         // check diagonal
         if (coords[0] == coords[1]) {
             for (int i = 0; i < 5; i++) {
@@ -123,12 +121,20 @@ public class Board {
                         .equals(actSymbol) ? 1 : 0;
             }
         }
-        // check antidiagonal
+        // check counter-diagonal
+        // first check if last coordinates lies on pattern
+        if ((coords[1] + coords[0] - 4) == 0) {
+            for (int i = 0; i < 5; i++) {
+                count[3] += spots
+                        .get(4-i)
+                        .get(i)
+                        .getSymbol(firstPlayerTurn)
+                        .equals(actSymbol) ? 1 : 0;
+            }
+        }
         for (int c : count) {
             if (c == 5) return true;
         }
         return false;
     }
-
-
 }
