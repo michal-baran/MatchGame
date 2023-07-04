@@ -9,6 +9,8 @@
     <li><a href="#overview">Overview</a></li>
     <li><a href="#game-rules">Game rules</a></li>
     <li><a href="#commands">Commands</a></li>
+    <li><a href="#building">Building the project</a></li>
+    <li><a href="#running">Running the program</a></li>
   </ol>
 </details>
 <!-- ABOUT THE PROJECT -->
@@ -93,3 +95,23 @@ There are several commands available throughout the game:
 - <b>/points</b> - prints players points,
 - <b>/show</b> - prints actual player board,
 - <b>/quit</b> - exits game
+
+<!-- Building -->
+<h2 id="building"> 🔨 Building the project</h2>
+
+We use the Gradle tool to build the project. To build the program, follow these steps:
+1. Make sure you have Gradle installed on your system.
+2. Open a terminal or command line and navigate to the root directory of the project.
+3. Execute the gradle build command: **gradle-build**. This will build the project and compile the source code.
+
+After following the steps above, you should find the JAR file you created in the build/libs directory. This is the executable file that you can run.
+
+<!-- Running the program -->
+<h2 id="running"> 🚀 Running the program</h2>
+To run the program, perform the following steps:
+
+1. Open a terminal or command line.
+2. Navigate to the directory where the JAR file is located (build/libs)
+3. Execute the ***java -jar name_file.jar***, where name_file.jar is the name of the JAR file created in the previous step.
+
+After the above steps, the program will be run and the result of the run will be visible in the console.
