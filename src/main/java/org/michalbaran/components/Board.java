@@ -18,7 +18,7 @@ public class Board {
             spots.add(spotsRow);
         }
         emptyCube = new Cube("EMP,EMP,EMP,EMP,EMP,EMP");
-        ensureUniqueness(true);
+        ensureUniqueness();
     }
 
     public Cube getCubeFromSpot(int[] coords) {
@@ -39,39 +39,53 @@ public class Board {
 
     }
 
-    public void ensureUniqueness(boolean side) {
+    public void ensureUniqueness() {
         // należy sprawdzić pole i porównać sąsiadujące pola po prawej, na dole i po prawej na dole
         for (int row = 0; row < spots.size(); row++) {
             for (int col = 0; col < spots.get(row).size(); col++) {
                 Spot spot = spots.get(row).get(col);
-                Symbol checked = spot.getSymbol(side);   // sprawdzany symbol
-                List<Symbol> symbols = new ArrayList<>();
+                Symbol checked1 = spot.getSymbol(true);   // sprawdzany symbol dla strony 1
+                Symbol checked2 = spot.getSymbol(false);   // sprawdzany symbol dla strony 2
+                List<Symbol> symbols1 = new ArrayList<>();
+                List<Symbol> symbols2 = new ArrayList<>();
 
                 if (row > 0) {
-                    Symbol onTop = spots.get(row - 1).get(col).getSymbol(side);  //sprawdzenie pola u góry
-                    symbols.add(onTop);
+                    Symbol onTop = spots.get(row - 1).get(col).getSymbol(true);  //sprawdzenie pola u góry dla tablicy gracza 1
+                    symbols1.add(onTop);
+                    onTop = spots.get(row - 1).get(col).getSymbol(false);  //sprawdzenie pola u góry dla tablicy gracza 2
+                    symbols2.add(onTop);
                     if (col < 4) {
-                        Symbol onTopRight = spots.get(row - 1).get(col + 1).getSymbol(side);  //sprawdzenie pola u góry po prawej
-                        symbols.add(onTopRight);
+                        Symbol onTopRight = spots.get(row - 1).get(col + 1).getSymbol(true);  //sprawdzenie pola u góry po prawej dla tablicy gracza 1
+                        symbols1.add(onTopRight);
+                        onTopRight = spots.get(row - 1).get(col + 1).getSymbol(true);  //sprawdzenie pola u góry po prawej dla tablicy gracza 2
+                        symbols2.add(onTopRight);
                     }
                 }
                 if (col < 4) {
-                    Symbol onRight = spots.get(row).get(col + 1).getSymbol(side);   //sprawdzenie pola po prawej
-                    symbols.add(onRight);
+                    Symbol onRight = spots.get(row).get(col + 1).getSymbol(true);   //sprawdzenie pola po prawej dla tablicy gracza 1
+                    symbols1.add(onRight);
+                    onRight = spots.get(row).get(col + 1).getSymbol(false);   //sprawdzenie pola po prawej dla tablicy gracza 2
+                    symbols2.add(onRight);
                     if (row < 4) {
-                        Symbol onBottomRight = spots.get(row + 1).get(col + 1).getSymbol(side); //sprawdzenie pola na dole po prawej
-                        symbols.add(onBottomRight);
+                        Symbol onBottomRight = spots.get(row + 1).get(col + 1).getSymbol(true); //sprawdzenie pola na dole po prawej dla tablicy gracza 1
+                        symbols1.add(onBottomRight);
+                        onBottomRight = spots.get(row + 1).get(col + 1).getSymbol(false); //sprawdzenie pola na dole po prawej dla tablicy gracza 2
+                        symbols2.add(onBottomRight);
                     }
                 }
                 if (row < 4) {
-                    Symbol onBottom = spots.get(row + 1).get(col).getSymbol(side);  //sprawdzenie pola na dole
-                    symbols.add(onBottom);
+                    Symbol onBottom = spots.get(row + 1).get(col).getSymbol(true);  //sprawdzenie pola na dole dla tablicy gracza 1
+                    symbols1.add(onBottom);
+                    onBottom = spots.get(row + 1).get(col).getSymbol(false);  //sprawdzenie pola na dole dla tablicy gracza 2
+                    symbols2.add(onBottom);
                 }
-                boolean notUnique = symbols.contains(checked);
+
+                boolean notUnique = symbols1.contains(checked1) || symbols2.contains(checked2);
                 while (notUnique) {
                     spot.setToNextSymbol();
-                    checked = spot.getSymbol(side);
-                    notUnique = symbols.contains(checked);
+                    checked1 = spot.getSymbol(true);
+                    checked2 = spot.getSymbol(false);
+                    notUnique = symbols1.contains(checked1) || symbols2.contains(checked2);
                 }
             }
         }
@@ -126,7 +140,7 @@ public class Board {
         if ((coords[1] + coords[0] - 4) == 0) {
             for (int i = 0; i < 5; i++) {
                 count[3] += spots
-                        .get(4-i)
+                        .get(4 - i)
                         .get(i)
                         .getSymbol(firstPlayerTurn)
                         .equals(actSymbol) ? 1 : 0;
