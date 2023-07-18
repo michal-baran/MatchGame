@@ -122,10 +122,14 @@ public class Game {
     }
 
     public void checkMatch() {
-        if (board.checkBoardForMatch(actCoords, firstPlayerTurn, actSymbol)) {
-            // Actual player has a match - check if match symbol is present on players cards
-            Player otherPlayer = getActPlayer().equals(players.get(0)) ? players.get(1) : players.get(0);
+        // check if any player has a match after last turn
+        boolean P1hasMatch = board.checkBoardForMatch(actCoords, true, actSymbol);
+        boolean P2hasMatch = board.checkBoardForMatch(actCoords, false, actCube.getOppositeSymbol(actSymbol));
+
+        // If one of the players has a match - check if match symbol is present on players cards
+        if (P1hasMatch || P2hasMatch) {
             int solution = 1;
+            Player otherPlayer = getActPlayer().equals(players.get(0)) ? players.get(1) : players.get(0);
             if (actPlayer.getCards().contains(actSymbol)) {
                 solution = 2;
             } else if (otherPlayer.getCards().contains(actSymbol)) {
@@ -133,20 +137,17 @@ public class Game {
             }
 
             switch (solution) {
-                case 1: {
+                case 1 -> {
                     System.out.printf("Player %s has a match and scores 1 point!\n", actPlayer.getName());
                     actPlayer.addPoints(1);
-                    break;
                 }
-                case 2: {
+                case 2 -> {
                     System.out.printf("Player %s has a match and also has matching symbol on his cards so scores 2 points!\n", actPlayer.getName());
                     actPlayer.addPoints(2);
-                    break;
                 }
-                case 3: {
+                case 3 -> {
                     System.out.printf("Player %s has a match but player %s has matching symbol on his cards so %s scores 2 points!\n", actPlayer.getName(), otherPlayer.getName(), otherPlayer.getName());
                     otherPlayer.addPoints(2);
-                    break;
                 }
             }
             if (actPlayer.getPoints() < 3) {
@@ -157,6 +158,7 @@ public class Game {
         if (actPlayer.getPoints() < 3) {
             this.switchPlayers();
         }
+
     }
 
     public void setCoordinates() {
