@@ -102,7 +102,7 @@ There are several commands available throughout the game:
 We use the Gradle tool to build the project. To build the program, follow these steps:
 1. Make sure you have Gradle installed on your system.
 2. Open a terminal or command line and navigate to the root directory of the project.
-3. Execute the gradle build command: **gradle-build**. This will build the project and compile the source code.
+3. Execute the gradle build command: **gradle build**. This will build the project and compile the source code.
 
 After following the steps above, you should find the JAR file you created in the build/libs directory. This is the executable file that you can run.
 
