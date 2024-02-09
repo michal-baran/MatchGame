@@ -49,4 +49,30 @@ public class Cube {
                 .forEach(sb::append);
         return sb.toString();
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+
+        Cube otherCube = (Cube) obj;
+
+        // Compare the content of symbolsList
+        if (!Objects.equals(this.symbolsList, otherCube.symbolsList)) {
+            return false;
+        }
+
+        // Compare the content of oppositesMap
+        return Objects.equals(this.oppositesMap, otherCube.oppositesMap);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(symbolsList, oppositesMap);
+    }
 }

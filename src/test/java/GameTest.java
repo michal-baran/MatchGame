@@ -17,6 +17,6 @@ public class GameTest {
         Assertions.assertNotNull(game.getCubes());
         Assertions.assertNotNull(game.getBoard());
         Assertions.assertNotNull(game.getCards());
-        assert game.getActCommand() instanceof Show;
+        assert game.getCurrCommand() instanceof Show;
     }
 }

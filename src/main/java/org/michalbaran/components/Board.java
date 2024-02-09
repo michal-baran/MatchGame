@@ -36,7 +36,6 @@ public class Board {
         Spot spot = spots.get(coords[1]).get(coords[0]);
         spot.setCube(cube);
         spot.setSymbol(symbol, firstPlayerTurn);
-
     }
 
     public void ensureUniqueness() {
