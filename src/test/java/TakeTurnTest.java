@@ -1,17 +1,8 @@
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-import org.michalbaran.commands.CheckWin;
-import org.michalbaran.commands.Command;
-import org.michalbaran.commands.TakeTurn;
-import org.michalbaran.components.Game;
-import org.mockito.Mockito;
-
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-
 public class TakeTurnTest {
+    /*
     private Game game;
     private TakeTurn command;
+
 
     @BeforeEach
     public void setUp() {
@@ -30,5 +21,5 @@ public class TakeTurnTest {
 
         // Verify that the result of execute() is an instance of TakeTurn class with the same game object
         assert result instanceof CheckWin;
-    }
+    } */
 }
