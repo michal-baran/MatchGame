@@ -1,8 +1,8 @@
 package org.michalbaran.components;
 
 import lombok.Getter;
-import org.michalbaran.commands.Command;
-import org.michalbaran.commands.Show;
+import org.michalbaran.states.State;
+import org.michalbaran.states.ShowState;
 import org.michalbaran.enums.Symbol;
 
 import java.io.BufferedReader;
@@ -13,20 +13,19 @@ import java.util.stream.Stream;
 
 @Getter
 public class Game {
-    private final Scanner sc = new Scanner(System.in);
+    private Scanner sc;
     private Board board;
     private List<Cube> cubes;
     private final List<Player> players = new ArrayList<>();
     private List<Symbol> cards;
-    private Cube currCube;
-    private Symbol currSymbol;
-    private Command currCommand;
-    private final int[] currCoords = new int[2];
-    private Player currPlayer;
+    private Cube currentCube;
+    private Symbol currentSymbol;
+    private State currentState;
+    private final int[] currentCoordinates = new int[2];
+    private Player currentPlayer;
     private boolean firstPlayerTurn = true;
 
     public Game() {
-
         try (Stream<String> cubesStream = new BufferedReader(new InputStreamReader(getClass().getClassLoader().getResourceAsStream("Cubes.txt"))).lines();
              Stream<String> cardsStream = new BufferedReader(new InputStreamReader(getClass().getClassLoader().getResourceAsStream("Cards.txt"))).lines()) {
             cubes = cubesStream
@@ -39,16 +38,17 @@ public class Game {
             System.out.println("File not found");
         }
         resetBoard();
-
-        currCommand = new
-                Show(this);
+        currentState = new ShowState();
     }
 
     public void play() {
-        while (currPlayer.getPoints() < 3) {
-            currCommand = currCommand.execute();
+        try (Scanner sc = new Scanner(System.in)) {
+            this.sc = sc;
+            while (currentPlayer.getPoints() < 3) {
+                currentState.execute(this);
+            }
+            System.out.printf("Player %s wins a game with %d points! Congratulations!", currentPlayer.getName(), currentPlayer.getPoints());
         }
-        System.out.printf("Player %s wins a game with %d points! Congratulations!", currPlayer.getName(), currPlayer.getPoints());
     }
 
     public void setPlayers() {
@@ -57,7 +57,7 @@ public class Game {
             Player tempPlayer = new Player(getInput());
             players.add(tempPlayer);
         }
-        currPlayer = players.get(0);
+        currentPlayer = players.get(0);
         dealCards();
     }
 
@@ -69,22 +69,25 @@ public class Game {
 
     public void switchPlayers() {
         firstPlayerTurn = !firstPlayerTurn;
-        currPlayer = players.get(firstPlayerTurn ? 0 : 1);
+        currentPlayer = players.get(firstPlayerTurn ? 0 : 1);
     }
 
-    public void setCurrCube() {
-        currCube = getCube();
+    public void setCurrentCube() {
+        currentCube = getCube();
+    }
+
+    public void setCurrentState(State state) {
+        currentState = state;
     }
 
     public void setCubeInSpot() {
         Cube tempCube = getCube();
-        board.setCubeInSpot(currCoords, currCube, currSymbol, firstPlayerTurn);
-        currCube = tempCube;
+        board.setCubeInSpot(currentCoordinates, currentCube, currentSymbol, firstPlayerTurn);
+        currentCube = tempCube;
     }
 
     public Cube getCube() {
-        Cube tempCube = board.getCubeFromSpot(currCoords);
-        return tempCube;
+        return board.getCubeFromSpot(currentCoordinates);
     }
 
     public String getInput() {
@@ -111,52 +114,52 @@ public class Game {
     }
 
     public void showBoard() {
-        board.show(currPlayer.getName(), firstPlayerTurn);
+        board.show(currentPlayer.getName(), firstPlayerTurn);
     }
 
     private void resetBoard() {
         System.out.println("\nPreparing new board...");
         Collections.shuffle(cubes);
         board = new Board(cubes);
-        Arrays.fill(currCoords, 0);
-        setCurrCube();
+        Arrays.fill(currentCoordinates, 0);
+        setCurrentCube();
     }
 
     public void checkMatch() {
         // check if any player has a match after last turn
-        boolean P1hasMatch = board.checkBoardForMatch(currCoords, true, currSymbol);
-        boolean P2hasMatch = board.checkBoardForMatch(currCoords, false, currCube.getOppositeSymbol(currSymbol));
+        boolean P1hasMatch = board.checkBoardForMatch(currentCoordinates, true, currentSymbol);
+        boolean P2hasMatch = board.checkBoardForMatch(currentCoordinates, false, currentCube.getOppositeSymbol(currentSymbol));
 
         // If one of the players has a match - check if match symbol is present on players cards
         if (P1hasMatch || P2hasMatch) {
             int solution = 1;
-            Player otherPlayer = getCurrPlayer().equals(players.get(0)) ? players.get(1) : players.get(0);
-            if (currPlayer.getCards().contains(currSymbol)) {
+            Player otherPlayer = getCurrentPlayer().equals(players.get(0)) ? players.get(1) : players.get(0);
+            if (currentPlayer.getCards().contains(currentSymbol)) {
                 solution = 2;
-            } else if (otherPlayer.getCards().contains(currSymbol)) {
+            } else if (otherPlayer.getCards().contains(currentSymbol)) {
                 solution = 3;
             }
 
             switch (solution) {
                 case 1 -> {
-                    System.out.printf("Player %s has a match and scores 1 point!\n", currPlayer.getName());
-                    currPlayer.addPoints(1);
+                    System.out.printf("Player %s has a match and scores 1 point!\n", currentPlayer.getName());
+                    currentPlayer.addPoints(1);
                 }
                 case 2 -> {
-                    System.out.printf("Player %s has a match and also has matching symbol on his cards so scores 2 points!\n", currPlayer.getName());
-                    currPlayer.addPoints(2);
+                    System.out.printf("Player %s has a match and also has matching symbol on his cards so scores 2 points!\n", currentPlayer.getName());
+                    currentPlayer.addPoints(2);
                 }
                 case 3 -> {
-                    System.out.printf("Player %s has a match but player %s has matching symbol on his cards so %s scores 2 points!\n", currPlayer.getName(), otherPlayer.getName(), otherPlayer.getName());
+                    System.out.printf("Player %s has a match but player %s has matching symbol on his cards so %s scores 2 points!\n", currentPlayer.getName(), otherPlayer.getName(), otherPlayer.getName());
                     otherPlayer.addPoints(2);
                 }
             }
-            if (currPlayer.getPoints() < 3) {
+            if (currentPlayer.getPoints() < 3) {
                 resetBoard();
                 dealCards();
             }
         }
-        if (currPlayer.getPoints() < 3) {
+        if (currentPlayer.getPoints() < 3) {
             this.switchPlayers();
         }
 
@@ -169,12 +172,12 @@ public class Game {
             char[] chars = input.toCharArray();
 
             if (input.matches("[A-E][1-5]")) {
-                currCoords[0] = chars[0] - 65;
-                currCoords[1] = chars[1] - 49;
+                currentCoordinates[0] = chars[0] - 65;
+                currentCoordinates[1] = chars[1] - 49;
                 break;
             } else if (input.matches("[1-5][A-E]")) {
-                currCoords[1] = chars[1] - 65;
-                currCoords[0] = chars[0] - 49;
+                currentCoordinates[1] = chars[1] - 65;
+                currentCoordinates[0] = chars[0] - 49;
                 break;
             } else {
                 System.out.println("Coordinates in wrong format!");
@@ -185,9 +188,9 @@ public class Game {
     public void chooseSymbol() {
         while (true) {
             try {
-                System.out.printf("Choose a symbol: %s your cards: %s\n", currCube, currPlayer.getCards());
-                currSymbol = Symbol.valueOf(getInput());
-                if (currCube.isSymbolPresent(currSymbol)) {
+                System.out.printf("Choose a symbol: %s your cards: %s\n", currentCube, currentPlayer.getCards());
+                currentSymbol = Symbol.valueOf(getInput());
+                if (currentCube.isSymbolPresent(currentSymbol)) {
                     break;
                 }
                 System.out.println("Symbol is not accessible on your cube!");
@@ -198,6 +201,6 @@ public class Game {
     }
 
     public void setEmptySymbol() {
-        currSymbol = Symbol.EMP;
+        currentSymbol = Symbol.EMP;
     }
 }

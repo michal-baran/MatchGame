@@ -1,7 +1,7 @@
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.michalbaran.commands.Show;
+import org.michalbaran.states.ShowState;
 import org.michalbaran.components.Game;
 
 public class GameTest {
@@ -17,6 +17,6 @@ public class GameTest {
         Assertions.assertNotNull(game.getCubes());
         Assertions.assertNotNull(game.getBoard());
         Assertions.assertNotNull(game.getCards());
-        assert game.getCurrCommand() instanceof Show;
+        assert game.getCurrentState() instanceof ShowState;
     }
 }
