@@ -13,7 +13,7 @@ import java.util.stream.Stream;
 
 @Getter
 public class Game {
-    private Scanner sc;
+    private final Scanner sc = new Scanner(System.in);
     private Board board;
     private List<Cube> cubes;
     private final List<Player> players = new ArrayList<>();
@@ -28,6 +28,7 @@ public class Game {
     public Game() {
         try (Stream<String> cubesStream = new BufferedReader(new InputStreamReader(getClass().getClassLoader().getResourceAsStream("Cubes.txt"))).lines();
              Stream<String> cardsStream = new BufferedReader(new InputStreamReader(getClass().getClassLoader().getResourceAsStream("Cards.txt"))).lines()) {
+
             cubes = cubesStream
                     .map(Cube::new)
                     .collect(Collectors.toList());
@@ -42,13 +43,10 @@ public class Game {
     }
 
     public void play() {
-        try (Scanner sc = new Scanner(System.in)) {
-            this.sc = sc;
-            while (currentPlayer.getPoints() < 3) {
-                currentState.execute(this);
-            }
-            System.out.printf("Player %s wins a game with %d points! Congratulations!", currentPlayer.getName(), currentPlayer.getPoints());
+        while (currentPlayer.getPoints() < 3) {
+            currentState.execute(this);
         }
+        System.out.printf("Player %s wins a game with %d points! Congratulations!", currentPlayer.getName(), currentPlayer.getPoints());
     }
 
     public void setPlayers() {

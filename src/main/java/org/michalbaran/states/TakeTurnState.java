@@ -12,6 +12,7 @@ public class TakeTurnState implements State {
 
         if (game.getCurrentCube() != null && game.getCurrentCube().equals(new Cube("EMP,EMP,EMP,EMP,EMP,EMP"))) {
             game.setEmptySymbol();
+            game.showBoard();
             System.out.println("You placed the cube in the empty space. Pull out another cube for your opponent.");
             game.setCoordinates();
             game.setCubeInSpot();
